@@ -1,2 +1,2 @@
-antlr4_python2_runtime==4.7.2
+antlr4_python3_runtime==4.7.2
 typing==3.7.4
