@@ -665,11 +665,11 @@ class CoolToCILVisitor:
                 self.instructions.append(CILAssignNode(name, value.vname))
 
         else:
-            # TODO Diferenciar a que tipo le hago el init, a los tipos Int, Bool y String les toca init, a los otros, no
-            self.instructions.append(CILPushaNode())
-            self.instructions.append(CILStaticCallNode("init_" + node.type_token,
-                                                       name_value.vname, name_value.vname, 0))
-            self.instructions.append(CILPopaNode())
+            if node.type_token in ['String', 'Int', 'Bool']:
+                self.instructions.append(CILPushaNode())
+                self.instructions.append(CILStaticCallNode("init_" + node.type_token,
+                                                           name_value.vname, name_value.vname, 0))
+                self.instructions.append(CILPopaNode())
         return name_value
 
     @visitor.when(ast.BooleanNegation)
