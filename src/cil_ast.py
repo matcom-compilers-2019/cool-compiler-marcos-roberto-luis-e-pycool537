@@ -104,7 +104,6 @@ class CILProgramNode(CILNode):
             ans += data.code()
         ans += '.text\n'
         ans += '.globl main\n'
-        ans += '.ent main\n'
         ans += 'main:\n'
 
         # StaticCall to init_Main
@@ -122,8 +121,7 @@ class CILProgramNode(CILNode):
         ans += 'addu, $sp, $sp, 4\n'
         ans += popa
         ans += 'li $v0, 10\n'
-        ans += 'syscall\n'
-        ans += '.end main\n'
+        ans += 'syscall\n\n'
         for function in self.functions:
             ans += function.code()
         return ans
@@ -202,7 +200,6 @@ class CILFunctionNode(CILNode):
     def code(self):
         ans = ''
         ans += '.globl ' + self.fname + '\n'
-        ans += '.ent ' + self.fname + '\n'
         ans += self.fname + ':\n'
         ans += 'subu $sp, $sp, 4\n'
         ans += 'sw $fp, ($sp)\n'
@@ -214,7 +211,7 @@ class CILFunctionNode(CILNode):
             ans += 'sw $zero, ($sp)\n'
         for instruction in self.instructions:
             ans += instruction.code()
-        ans += '.end ' + self.fname + '\n'
+        ans += '\n'
         return ans
 
     def __repr__(self):

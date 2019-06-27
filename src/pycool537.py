@@ -41,12 +41,12 @@ if __name__ == '__main__':
 
     val = ast.validate(c)
     if not val:
-        exit()
+        exit(1)
 
     x = type_checker.visit(ast, c, [])
 
     if not x:
-        exit()
+        exit(1)
 
     cil_visitor = CoolToCILVisitor()
 

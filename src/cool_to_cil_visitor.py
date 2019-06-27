@@ -932,6 +932,7 @@ class CoolToCILVisitor:
         expr = self.visit(node.value)
         name = self.get_variable_name("neg_" + str(self.local_vars_count))
         local_node = self.def_internal_var(name)
+        self.instructions.append(CILGetAttribNode(expr.vname, 2, 0 , expr.vname))
         dif = CILMinusNode("0", expr.vname, local_node.vname)
         self.instructions.append(dif)
         name = self.get_variable_name("neg_instance_" + str(self.local_vars_count))
