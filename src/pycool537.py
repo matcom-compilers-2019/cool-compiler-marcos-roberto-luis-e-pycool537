@@ -39,11 +39,14 @@ if __name__ == '__main__':
 
     type_hierarchy.herency_resolve(c, 'Object')
 
-    print(ast.validate(c))
+    val = ast.validate(c)
+    if not val:
+        exit()
 
     x = type_checker.visit(ast, c, [])
 
-    print(x, c)
+    if not x:
+        exit()
 
     cil_visitor = CoolToCILVisitor()
 

@@ -355,9 +355,15 @@ class CoolToCILVisitor:
         in_string_value = self.def_internal_var(self.get_variable_name('in_string_value_' + str(len(self.local_vars))))
         name_0 = self.get_variable_name("self_" + str(self.local_vars_count))
         local_0 = self.def_internal_var(name_0)
+        local_1 = self.def_internal_var(self.get_variable_name("0_number_" + str(self.local_vars_count)))
+        local_2 = self.def_internal_var(self.get_variable_name("length_" + str(self.local_vars_count)))
         self.instructions.append(CILArgNode(local_0.vname, 0))
         self.instructions.append(CILReadStringNode(in_string_value.vname))
-        self.instructions.append(CILReturnNode(in_string_value.vname))
+        self.instructions.append(CILValueNode(local_1.vname, "0"))
+        self.instructions.append(CILLengthNode(in_string_value.vname, local_2.vname))
+        self.instructions.append(CILSubstringNode(in_string_value.vname, local_1.vname,
+                                                  local_2.vname, in_string_value.vname))
+        self.instructions.append(CILReturnNode(local_0.vname))
         functions.append(CILFunctionNode('def_IO_in_string', self.func_count, [local_0.vname], self.local_vars,
                                          self.instructions))
         self.func_count += 1
@@ -370,7 +376,7 @@ class CoolToCILVisitor:
         name_0 = self.get_variable_name("self_" + str(self.local_vars_count))
         local_0 = self.def_internal_var(name_0)
         self.instructions.append(CILArgNode(local_0.vname, 0))
-        self.instructions.append(CILReadStringNode(in_int_value.vname))
+        self.instructions.append(CILReadIntegerNode(in_int_value.vname))
         self.instructions.append(CILReturnNode(in_int_value.vname))
         functions.append(CILFunctionNode('def_IO_in_int', self.func_count, [local_0.vname],
                                          self.local_vars, self.instructions))
@@ -856,8 +862,7 @@ class CoolToCILVisitor:
         self.instructions.append(CILGetAttribNode(right.vname, 2, 0, right.vname))
         name = self.get_variable_name("var_" + str(self.local_vars_count))
         local_0_node = self.def_internal_var(name)
-        self.instructions.append(CILValueNode(local_0_node.vname, "0"))
-        self.instructions.append(CILMinusNode(right.vname, local_0_node.vname, local_0_node.vname))
+        self.instructions.append(CILEqualNode(right.vname, local_0_node.vname))
         label_name = self.get_label_name("zero_division")
         self.instructions.append(CILGotoIfNode(local_0_node.vname, label_name))
         div_node = CILDivNode(left.vname, right.vname, value_node.vname)
