@@ -4,7 +4,7 @@
 | ---------------------------- | ----- | --------------- |
 | Luis Ernesto Martínez Padrón | C412  | @lemartinez2245 |
 | Roberto Balboa González      | C412  | @Roberbg97      |
-| Marcos Alderete Flores       | C412  |                 |
+| Marcos Alderete Flores       | C412  | @m4rok97        |
 
 Para ejecutar el compilador escribir en la línea de comandos la siguiente línea:
 

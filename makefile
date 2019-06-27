@@ -1,22 +1,25 @@
-help:
+default: test.sh
+
+test.sh:
+    ./test.sh
+
+help: 
     @echo "make install"
     @echo "       installs all the dependencies"
     @echo "make test"
     @echo "       run tests"
 
-install:
+install.sh: requirements.txt
     pip3 install -r requirements.txt
     sudo apt install openjdk-8-jre
 
-test:
-    ./test.sh
 
-cleanpyc:
+cleanpyc: 
     find . -name '*.pyc' -exec rm --force {} +
     find . -name '*.pyo' -exec rm --force {} +
     name '*~' -exec rm --force  {}
 
-cleanbuild:
+cleanbuild: 
     rm --force --recursive build/
     rm --force --recursive dist/
     rm --force --recursive *.egg-info
