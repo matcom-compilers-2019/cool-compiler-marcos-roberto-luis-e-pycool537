@@ -5,7 +5,7 @@ if [ $# = 3 ] && [ $2 = '-o' ]
 else
 	if [ $# = 1 ]
 	then
-	python3 pycool537.py $1
+	python3 pycool537.py $1 -o codigo_cool.asm
 	java -jar Mars4_5.jar codigo_cool.asm
 else
 	echo "El uso corecto de este script es:"

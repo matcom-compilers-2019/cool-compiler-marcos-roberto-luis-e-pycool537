@@ -5,4 +5,4 @@ results:
 	./tester.sh
 
 compile: 
-	./compile.sh cool.cl
+	./compile.sh test/hello_world.cl
