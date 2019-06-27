@@ -1,0 +1,54 @@
+\documentclass[]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+%opening
+\title{Proyecto de Compilación:\\PyCOOL537}
+\author{Marcos Alderete Flores\\
+		Roberto Balboa González\\
+		Luis Ernesto Martínez Padrón}
+
+\begin{document}
+	
+\maketitle
+
+\section{Uso del Compilador}
+El compilador \verb|PyCool537| está completamente elaborado en Python (específicamente con su versión 3.6). A pesar de que algunos de los archivos del proyecto fueron generados con el uso de ANTLR4, para el uso del compilador no es necesario tener la librería que utiliza Python para interactuar con esta herramienta. En caso de querer hacer cambios en la gramática que se toma como base de este compilador, es necesario tener JDK8 (Java Development Kit 8) o superior instalado. En todo caso es necesario tener instalada la librería de Python: \verb|antlr4-runtime|.
+
+Para la ejecución del compilador es necesario tener guardado en un archivo (\verb|codigo_cool.cl|) el código COOL a compilar. Luego, en la carpeta del proyecto ejecutar la siguiente línea de comando:
+
+\verb|python3 pycool537.py codigo_cool.cl|
+
+De esta forma la salida será dada en un archivo con el nombre \verb|codigo_cool.asm|. De querer especificar el nombre del archivo de salida, puede utilizar la opción \verb|-o| para esto. Por ejemplo:
+
+\verb|python3 pycool537.py codigo_cool.cl -o archivo_de_salida.asm|
+
+Para ejecutar el código MIPS generado en el archivo de salida es necesario hacer uso de un compilador (simulador) de ensamblador MIPS. Entre los archivos del proyecto está contenido el compilador MARS, con el cual es posible abrir y ejecutar el archivo \verb|.asm| de salida del compilador \verb|PyCOOL537|.
+
+\section{Arquitectura del Compilador}
+\verb|PyCool537| está dividido en n secciones principales:
+
+\begin{itemize}
+	\item Archivo de inicialización del compilador: \verb|pycool537.py|
+	\item Gramática base(LL(k)): declarada en el archivo \verb|cool.g4|
+	\item Lexer-Parser: definidos en los archivos \verb|cool.interp|, \verb|cool.tokens|, \verb|coolLexer.interp|, \verb|coolLexer.py|, \verb|coolLexer.tokens|, \verb|coolListener.py|, \verb|coolParser.py| y \verb|coolVisitor.py| generados por ANTLR4
+	\item Traducción del árbol de parsing al AST para chequeo semántico (\verb|ast.py| y \verb|ParsingToASTVisitor|)
+	\item Chequeo semántico(\verb|typeCheck.py|, \verb|context.py| y \verb|contextType.py|)
+	\item Traducción del AST a árbol de código CIL(\verb|cil_ast.py|, \verb|pre_visitor.py| y \verb|cool_to_cil_visitor.py|)
+	\item Generación de código MIPS y generación del archivo de salida.
+\end{itemize}
+
+\section{Problemas Técnicos}
+\subsection{Representación de tipos en memoria}
+Los tipos fueron representados como direcciones de memoria en las cuales se guardan referencias a los atributos correspondientes y otras propiedades que se añadieron para guardar información referente a las instancias como las siguientes:
+\begin{itemize}
+	\item Class Tag: un índice para identificar a las clases.
+	\item Object Size: un número que representa el tamaño, contado en cantidad de palabras, de los objetos que se guardan en la instancia.
+	\item Dispatch Table: una referencia a la tabla de métodos virtuales de la clase instanciada.
+\end{itemize}
+
+Luego de estas propiedades extra, se encuentran representados los atributos.
+
+\subsection{Ocultamiento de variables}
+Para realizar esta característica del lenguaje se utilizó un diccionario de Python en el cual se guardan como llaves los nombres de las variables locales que están declaradas y como valores la lista de los nombres de las variables locales en las cuales se ha representado el valor guardado en la función de variables con ese nombre. O sea, que en esas listas el último nombre da variable local es el valor que se toma dado que fue el último valor asignado a la variable pedida.
+\end{document} 

@@ -1,15 +1,7 @@
-# ===============================================================
-# =======================AST=HIERARCHY===========================
-# ===============================================================
-
-# Todo: arreglar el proyecto
-
-ERROR = 0
-INTEGER = 1
-
 from context import Context
 from contextType import ContextType
 from contextType import Type
+
 
 class Node:
     """
@@ -18,7 +10,8 @@ class Node:
     def __init__(self):
         self.context_type = ContextType()
         self.return_type = Type('Untype')
-        self.dynamic_node = Type('Untype')
+        self.dynamic_type = Type('Untype')
+        self.inner_context = None
 
     def validate(self, context: Context) -> bool:
         """
@@ -69,7 +62,6 @@ class ProgramNode(Node):
         self_type_context = self.context.create_child_context()
         self.context_map['SELF_TYPE'] = self_type_context
 
-
     def __repr__(self):
         s = "Program:\n"
         for c in self.class_list:
@@ -102,6 +94,7 @@ class ClassNode(Node):
     def __init__(self, name, parent, features):
         """
         Create a ClassNode
+
         :param name: The name of the class
         :param parent: The name of the parent class
         :param features: A list with the features of the class (methods and atributes)
@@ -245,6 +238,7 @@ class ActionNode(Node):
         self.name = name
         self.action_type = action_type
         self.body = body
+        self.inner_context = None
 
     def validate(self, context: Context):
         self.inner_context = context.create_child_context()
@@ -407,7 +401,7 @@ class DeclarationNode(ExpressionNode):
         if self.expr is not None and not self.expr.validate(context):
             return False
         if not context.define(self.idx_token):
-            print('Multiple declaration of variable with id '+ self.idx_token)
+            print('Multiple declaration of variable with id ' + self.idx_token)
             return False
         return True
 
@@ -418,11 +412,12 @@ class IfNode(ExpressionNode):
         self.predicate = predicate
         self.then_expr = then_expr
         self.else_expr = else_expr
+
     # Este no se usa
     def get_type(self):
         return self.then_expr
 
-    def validate(self, context:Context):
+    def validate(self, context: Context):
         if not self.predicate.validate(context):
             return False
         if not self.then_expr.validate(context):
@@ -437,6 +432,7 @@ class WhileNode(ExpressionNode):
         super(WhileNode, self).__init__()
         self.predicate = predicate
         self.expr = expr
+
     # Este no se usa
     def get_type(self):
         return self.expr.get_type
@@ -477,7 +473,6 @@ class AssignNode(AtomicNode):
         return True
 
 
-# TODO: EYE!!!!
 class DynamicDispatchNode(ExpressionNode):
     def __init__(self, instance, method, arguments):
         super(DynamicDispatchNode, self).__init__()
@@ -521,6 +516,7 @@ class IntegerNode(AtomicNode):
     def validate(self, context: Context) -> bool:
         return True
 
+
 class BooleanNode(AtomicNode):
     def __init__(self, boolean_token):
         super(BooleanNode, self).__init__()
@@ -529,6 +525,7 @@ class BooleanNode(AtomicNode):
     def validate(self, context: Context) -> bool:
         return True
 
+
 class StringNode(AtomicNode):
     def __init__(self, string_token):
         super(StringNode, self).__init__()
@@ -536,6 +533,7 @@ class StringNode(AtomicNode):
 
     def validate(self, context: Context) -> bool:
         return True
+
 
 class VariableNode(AtomicNode):
     def __init__(self, idx_token):
@@ -555,6 +553,7 @@ class PrintIntegerNode(AtomicNode):
     def validate(self, context: Context) -> bool:
         return True
 
+
 class PrintStringNode(AtomicNode):
     def __init__(self, string_token):
         super(PrintStringNode, self).__init__()
@@ -562,6 +561,7 @@ class PrintStringNode(AtomicNode):
 
     def validate(self, context: Context) -> bool:
         return True
+
 
 class ScanNode(AtomicNode):
     def __init__(self, method):
@@ -571,5 +571,3 @@ class ScanNode(AtomicNode):
 
     def validate(self, context: Context) -> bool:
         return True
-
-# ===============================================================

@@ -40,10 +40,10 @@ expr
     | CASE expr OF (ID ':' TYPE CASEARR expr ';') + ESAC            # case
     | NEW TYPE                                                      # newObject
     | ISVOID expr                                                   # isVoid
-    | expr ADD expr                                                 # add
-    | expr MINUS expr                                               # minus
 	| expr MULT expr                                                # star
 	| expr DIV expr                                                 # division
+    | expr ADD expr                                                 # add
+    | expr MINUS expr                                               # minus
 	| '~' expr                                                      # negInteger
 	| expr LT expr                                                  # lessThan
 	| expr LE expr                                                  # lessEqual

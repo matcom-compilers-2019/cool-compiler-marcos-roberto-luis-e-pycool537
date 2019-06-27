@@ -44,8 +44,6 @@ class ContextType:
         self.symbols = symbols
         self.parent = parent
 
-
-
     def getType(self, type_name: str) -> Type:
         return self.types[type_name]
 

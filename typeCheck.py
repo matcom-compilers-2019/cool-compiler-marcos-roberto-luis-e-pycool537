@@ -34,7 +34,6 @@ class TypeCheckVisitor:
     def visit(self, node: ast.FeatureNode, context: ContextType, errors):
         pass
 
-    # TODO: Revisar, hay que ver que todos los tipos de los actions sean diferentes
     @visitor.when(ast.MethodNode)
     def visit(self, node: ast.MethodNode, context: ContextType, errors: list, current_type: Type):
         inner_context = context.createChildContext()
@@ -76,23 +75,17 @@ class TypeCheckVisitor:
         context.defineSymbol(node.name, context.getType(node.attr_type))
         return True
 
-
     @visitor.when(ast.ParamNode)
     def visit(self, node: ast.ParamNode, context: ContextType, errors: list, current_type: Type):
         node.returnType = node.param_type
         return True
 
-    # TODO: Estoy casi seguro de que es asi
     @visitor.when(ast.ObjectNode)
     def visit(self, node: ast.ObjectNode, context: ContextType, errors: list, current_type: Type):
-        #c = context.getTypeFor(node.name)
+        # c = context.getTypeFor(node.name)
         node.return_type = context.getTypeFor(node.name).name
         node.dynamic_type = context.getTypeFor(node.name).name
         return True
-
-    # @visitor.when(ast.SelfNode)
-    # def visit(self, node: ast.SelfNode, context: ContextType, errors: list, current_type: Type):
-    #     node.returnType = currentType
 
     @visitor.when(ast.ExpressionNode)
     def visit(self, node: ast.ExpressionNode, context: ContextType, errors: list, current_type: Type):
@@ -138,7 +131,6 @@ class TypeCheckVisitor:
         node.return_type = node.body.return_type
         node.dynamic_type = node.body.dynamic_type
         return True
-
 
     @visitor.when(ast.IsVoidNode)
     def visit(self, node: ast.IsVoidNode, context: ContextType, errors, current_type: Type):
@@ -316,7 +308,6 @@ class TypeCheckVisitor:
         node.dynamic_type = 'Int'
         return True
 
-    # TODO
     @visitor.when(ast.LetInNode)
     def visit(self, node: ast.LetInNode, context: ContextType, errors: list, current_type: Type):
         inner_context = context.createChildContext()
@@ -425,7 +416,6 @@ class TypeCheckVisitor:
         node.dynamic_type = node.expr.dynamic_type
         return True
 
-    # TODO
     @visitor.when(ast.DynamicDispatchNode)
     def visit(self, node: ast.DynamicDispatchNode, context: ContextType, errors, current_type: Type):
         if type(node.instance) == str:
@@ -452,8 +442,6 @@ class TypeCheckVisitor:
             node.dynamic_type = t0
         return True
 
-
-    # TODO
     @visitor.when(ast.StaticDispatchNode)
     def visit(self, node: ast.StaticDispatchNode, context: ContextType, errors, current_type: ContextType):
         if not self.visit(node.instance, context, errors, current_type):
@@ -473,7 +461,7 @@ class TypeCheckVisitor:
             ans = False
 
         # dispatch_arguments_types = [method for method in dispatch_type.methods.values()]
-        if not node.method in dispatch_type.methods:
+        if node.method not in dispatch_type.methods:
             print('The specified type has not a method called ' + node.method)
             ans = False
 
@@ -521,7 +509,6 @@ class TypeCheckVisitor:
             return False
         return True
 
-    # TODO
     @visitor.when(ast.PrintStringNode)
     def visit(self, node: ast.PrintStringNode, context: ContextType, errors, current_type: Type):
         if not self.visit(node.string_token, context, errors, current_type):
@@ -533,7 +520,6 @@ class TypeCheckVisitor:
             return False
         return True
 
-    # TODO
     @visitor.when(ast.ScanNode)
     def visit(self, node: ast.ScanNode, context: ContextType, errors, current_type: Type):
         node.return_type = 'Int' if node.method == 'in_int' else 'String'

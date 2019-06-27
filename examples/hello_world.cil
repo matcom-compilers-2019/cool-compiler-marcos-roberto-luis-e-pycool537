@@ -1,0 +1,28 @@
+# region predefined types
+.TYPES
+type Int {
+    ...
+}
+type Bool {
+    ...
+}
+type String {
+    ...
+}
+type IO{
+    ...
+}
+# endregion
+
+type Main {
+    method main: SELF_TYPE;
+}
+
+.DATA
+hello_world = "Hello, World.\n";
+
+.CODE
+function main {
+    x = LOAD hello_world;
+    PRINT x;
+}

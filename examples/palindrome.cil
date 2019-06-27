@@ -1,0 +1,28 @@
+.TYPES
+type Main {
+    method pal: Bool;
+    attribute i;
+    method main: SELF_TYPE;
+}
+
+.CODE
+function pal {
+    ARG s;
+    LOCAL if0_cond;
+    LOCAL if1_cond;
+    LOCAL ret_val;
+    PARAM s;
+    if0_cond = CALL lenght
+    if0_cond = if0_cond == 0;
+    IF if0_cond GOTO if0_label
+    PARAM s;
+    if1_cond = CALL lenght;
+    if1_cond = if1_cond == 1;
+    IF if1_cond GOTO if1_label
+    GOTO next0;
+    if0_label:
+    ret_val = True;
+    next0:
+
+    RETURN ret_val
+}

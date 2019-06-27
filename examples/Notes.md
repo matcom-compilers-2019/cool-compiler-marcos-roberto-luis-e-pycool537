@@ -1,0 +1,3 @@
+- Cambiar todos los `ALLOCATE` por los llamados a los métodos de incialización de todas las clases.
+- Hacerle un método `NOMBREDECLASE_init_NOMBREDECLASE` a todas las clases para asignar los valores por defecto a todos los atributos.
+- Poner en la parte de alante de los nombres de los métodos de las clases: `NOMBREDECLASE_` para que a la hora de redefinir métodos tengan la misma 2da parte y se pueda tomar como redefinición al que tiene la primera parte igual al nombre de la clase

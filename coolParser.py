@@ -79,10 +79,10 @@ def serializedATN():
         buf.write("\2\2\2\u00ad\u00a5\3\2\2\2\u00ad\u00a6\3\2\2\2\u00ad\u00a7")
         buf.write("\3\2\2\2\u00ad\u00a8\3\2\2\2\u00ad\u00a9\3\2\2\2\u00ad")
         buf.write("\u00aa\3\2\2\2\u00ae\u00dc\3\2\2\2\u00af\u00b0\f\22\2")
-        buf.write("\2\u00b0\u00b1\7!\2\2\u00b1\u00db\5\16\b\23\u00b2\u00b3")
-        buf.write("\f\21\2\2\u00b3\u00b4\7\"\2\2\u00b4\u00db\5\16\b\22\u00b5")
-        buf.write("\u00b6\f\20\2\2\u00b6\u00b7\7#\2\2\u00b7\u00db\5\16\b")
-        buf.write("\21\u00b8\u00b9\f\17\2\2\u00b9\u00ba\7$\2\2\u00ba\u00db")
+        buf.write("\2\u00b0\u00b1\7#\2\2\u00b1\u00db\5\16\b\23\u00b2\u00b3")
+        buf.write("\f\21\2\2\u00b3\u00b4\7$\2\2\u00b4\u00db\5\16\b\22\u00b5")
+        buf.write("\u00b6\f\20\2\2\u00b6\u00b7\7!\2\2\u00b7\u00db\5\16\b")
+        buf.write("\21\u00b8\u00b9\f\17\2\2\u00b9\u00ba\7\"\2\2\u00ba\u00db")
         buf.write("\5\16\b\20\u00bb\u00bc\f\r\2\2\u00bc\u00bd\7&\2\2\u00bd")
         buf.write("\u00db\5\16\b\16\u00be\u00bf\f\f\2\2\u00bf\u00c0\7\'\2")
         buf.write("\2\u00c0\u00db\5\16\b\r\u00c1\u00c2\f\13\2\2\u00c2\u00c3")
@@ -1503,53 +1503,53 @@ class coolParser ( Parser ):
                     self._errHandler.sync(self)
                     la_ = self._interp.adaptivePredict(self._input,17,self._ctx)
                     if la_ == 1:
-                        localctx = coolParser.AddContext(self, coolParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = coolParser.StarContext(self, coolParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 173
                         if not self.precpred(self._ctx, 16):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 16)")
                         self.state = 174
-                        self.match(coolParser.ADD)
+                        self.match(coolParser.MULT)
                         self.state = 175
                         self.expr(17)
                         pass
 
                     elif la_ == 2:
-                        localctx = coolParser.MinusContext(self, coolParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = coolParser.DivisionContext(self, coolParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 176
                         if not self.precpred(self._ctx, 15):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 15)")
                         self.state = 177
-                        self.match(coolParser.MINUS)
+                        self.match(coolParser.DIV)
                         self.state = 178
                         self.expr(16)
                         pass
 
                     elif la_ == 3:
-                        localctx = coolParser.StarContext(self, coolParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = coolParser.AddContext(self, coolParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 179
                         if not self.precpred(self._ctx, 14):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 14)")
                         self.state = 180
-                        self.match(coolParser.MULT)
+                        self.match(coolParser.ADD)
                         self.state = 181
                         self.expr(15)
                         pass
 
                     elif la_ == 4:
-                        localctx = coolParser.DivisionContext(self, coolParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = coolParser.MinusContext(self, coolParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 182
                         if not self.precpred(self._ctx, 13):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 13)")
                         self.state = 183
-                        self.match(coolParser.DIV)
+                        self.match(coolParser.MINUS)
                         self.state = 184
                         self.expr(14)
                         pass
