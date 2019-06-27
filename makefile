@@ -1,6 +1,3 @@
-.PHONY: cleanbuild cleanpyc test install 
- 
-.DEFAULT: help
 help:
     @echo "make install"
     @echo "       installs all the dependencies"
@@ -8,11 +5,11 @@ help:
     @echo "       run tests"
 
 install:
-	pip3 install -r requirements.txt
-	sudo apt install openjdk-8-jre
+    pip3 install -r requirements.txt
+    sudo apt install openjdk-8-jre
 
-test:|cleanpyc
-	./test.sh
+test:
+    ./test.sh
 
 cleanpyc:
     find . -name '*.pyc' -exec rm --force {} +

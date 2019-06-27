@@ -204,7 +204,6 @@ class CILFunctionNode(CILNode):
     def code(self):
         ans = ''
         ans += '.globl ' + self.fname + '\n'
-        ans += '.ent ' + self.fname + '\n'
         ans += self.fname + ':\n'
         ans += 'subu $sp, $sp, 4\n'
         ans += 'sw $fp, ($sp)\n'
@@ -216,7 +215,6 @@ class CILFunctionNode(CILNode):
             ans += 'sw $zero, ($sp)\n'
         for instruction in self.instructions:
             ans += instruction.code()
-        ans += '.end ' + self.fname + '\n'
         return ans
 
     def __repr__(self):
