@@ -80,9 +80,9 @@ class Main {
    
     main() : SELF_TYPE {
         {
-            cells <- (new CellularAutomaton).init("         X         ");
+            cells <- (new CellularAutomaton).init("      X      ");
             cells.print();
-            (let countdown : Int <- 20 in
+            (let countdown : Int <- 10 in
                 while 0 < countdown loop
                     {
                         cells.evolve();

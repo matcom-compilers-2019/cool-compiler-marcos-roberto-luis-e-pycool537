@@ -11,8 +11,8 @@ class Main inherits IO
 	main():IO
 	{
 		{
-			self.out_int(fib(5));
-			self.out_string("\n");
+			-- self.out_int(fib(5));
+			-- self.out_string("\n");
 			self.out_int(self.fib(5));
 		}
 	};
