@@ -885,7 +885,7 @@ class CoolToCILVisitor:
         local_node = self.def_internal_var(name)
         name = self.get_variable_name("value_" + str(self.local_vars_count))
         value_node = self.def_internal_var(name)
-        # self.instructions.append(CILAllocateNode(4, str(3), str(4), "Bool_dispatch_table", local_node.vname))
+
         self.instructions.append(CILPushaNode())
         self.instructions.append(CILStaticCallNode("init_Bool", local_node.vname, local_node.vname, 0))
         self.instructions.append(CILPopaNode())
@@ -907,8 +907,7 @@ class CoolToCILVisitor:
         self.instructions.append(CILPopaNode())
         self.instructions.append(CILValueNode(value_node.vname, node.integer_token))
         self.instructions.append(CILSetAttribNode(local_node.vname, 2, 0, value_node.vname))
-        # integer_node = CILIntegerNode(node.integer_token, node.context_type)
-        # self.instructions.append(CILAssignNode(name, local_node.vname, node.context_type))
+
         return local_node
 
     @visitor.when(ast.StringNode)
@@ -932,8 +931,9 @@ class CoolToCILVisitor:
         expr = self.visit(node.value)
         name = self.get_variable_name("neg_" + str(self.local_vars_count))
         local_node = self.def_internal_var(name)
-        self.instructions.append(CILGetAttribNode(expr.vname, 2, 0 , expr.vname))
-        dif = CILMinusNode("0", expr.vname, local_node.vname)
+        self.instructions.append(CILGetAttribNode(expr.vname, 2, 0, expr.vname))
+        self.instructions.append(CILValueNode(local_node.vname, "0"))
+        dif = CILMinusNode(local_node.vname, expr.vname, local_node.vname)
         self.instructions.append(dif)
         name = self.get_variable_name("neg_instance_" + str(self.local_vars_count))
         local_int_instance = self.def_internal_var(name)
