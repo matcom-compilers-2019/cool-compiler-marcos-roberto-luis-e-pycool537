@@ -1,8 +1,8 @@
-.PHONY: clean
+install:
+	pip3 install -r requirements.txt
 
-main:
-	# Compiling the compiler :)
+results:
+	./tester.sh
 
-clean:
-	rm -rf build/*
-
+compile: 
+	./compile.sh test/hello_world.cl

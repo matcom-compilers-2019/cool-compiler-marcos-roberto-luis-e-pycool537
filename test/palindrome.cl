@@ -11,12 +11,17 @@ class Main inherits IO {
     };
 
     i : Int;
+    s : String;
 
     main() : SELF_TYPE {
 	{
-            i <- ~1;
+		i <- ~1;
 	    out_string("enter a string\n");
-	    if pal(in_string())
+	    s <- in_string();
+	    -- es necesario quitarle el '\n' a la lectura, pues el scan siempre lee con el salto de linea
+	    -- por eso se hace substr
+	    s <- s.substr(0, s.length() - 1);
+	    if pal(s)
 	    then out_string("that was a palindrome\n")
 	    else out_string("that was not a palindrome\n")
 	    fi;
