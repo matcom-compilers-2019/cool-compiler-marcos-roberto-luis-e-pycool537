@@ -1,25 +1,18 @@
-default: test.sh
+HOST=127.0.0.1
+TEST_PATH=./
 
-test.sh:
-    ./test.sh
-
-help: 
-    @echo "make install"
-    @echo "       installs all the dependencies"
-    @echo "make test"
-    @echo "       run tests"
-
-install.sh: requirements.txt
-    pip3 install -r requirements.txt
-    sudo apt install openjdk-8-jre
-
-
-cleanpyc: 
+clean-pyc:
     find . -name '*.pyc' -exec rm --force {} +
     find . -name '*.pyo' -exec rm --force {} +
-    name '*~' -exec rm --force  {}
+   name '*~' -exec rm --force  {} 
 
-cleanbuild: 
+clean-build:
     rm --force --recursive build/
     rm --force --recursive dist/
     rm --force --recursive *.egg-info
+
+test: clean-pyc
+    test.sh
+
+compile: 
+    compile.sh cool.cl
